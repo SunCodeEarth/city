@@ -909,12 +909,21 @@ function tags(str, cls='') {
 }
 
 // Population category → base radius (max 30px)
-const POP_RADIUS = {
+const POP_RADIUS_PX = {
   'Mega':       30,
   'Very Large': 22,
   'Large':      15,
   'Medium':     10,
   'Small':       6,
+};
+
+// Population category → base radius (max 100 KM)
+const POP_RADIUS = {
+  'Mega':       60*1000,
+  'Very Large': 22*1000,
+  'Large':      15*1000,
+  'Medium':     10*1000,
+  'Small':       6*1000,
 };
 
 function popRadius(row) {
@@ -1078,7 +1087,7 @@ function initMap() {
 
     const id = row['Unique_Identifier'];
     const r = popRadius(row);
-    const m = L.circleMarker([lat, lng], {
+    const m = L.circle([lat, lng], {
       radius: r,
       ...CIRCLE_STYLE.default,
     }).addTo(map);
@@ -1439,7 +1448,7 @@ const THEMES = {
     label: 'Light Mode',
     icon: '☀️',
     // which basemap to auto-switch to
-    basemap: 'dark',
+    basemap: 'esri-world',
   },
   flatly: {
     name: 'flatly',
